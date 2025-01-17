@@ -1,4 +1,4 @@
-<header>
+<mat-toolbar>
     <nav mat-tab-nav-bar [tabPanel]="tabPanel">
         @for (link of links; track link.section) {
           <a mat-tab-link
@@ -7,6 +7,6 @@
             routerLink="{{link.url}}"> {{link.section}} </a>
         }
       </nav>
-      <mat-tab-nav-panel #tabPanel><router-outlet /></mat-tab-nav-panel>
-</header>
-  
+      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+</mat-toolbar>
+<router-outlet />

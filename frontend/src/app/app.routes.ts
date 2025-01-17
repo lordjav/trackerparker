@@ -9,23 +9,28 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 export const routes: Routes = [
     {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
+        title: 'Registrar'
     },
     {
         path: 'parking-lot',
-        component: ParkingLotComponent
+        component: ParkingLotComponent,
+        title: 'Parqueadero'
     },
     {
         path: 'history',
-        component: HistoryComponent
+        component: HistoryComponent,
+        title: 'Historial'
     },
     {
         path: 'settings',
-        component: SettingsComponent
+        component: SettingsComponent,
+        title: 'Ajustes'
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        title: 'Tracker Parker'
     },
     {
         path: '',
@@ -34,6 +39,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        component: PageNotFoundComponent
+        component: PageNotFoundComponent,
+        title: 'Error'
     }
 ];
