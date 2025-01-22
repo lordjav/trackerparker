@@ -1,1 +1,5 @@
-<p>parking-lot works!</p>
+<mat-card>
+    @for (parking of activeParkingList; track parking.id) {
+        <app-active-parking [parking]="parking"></app-active-parking>
+    }
+</mat-card>

@@ -13,6 +13,11 @@ export const routes: Routes = [
         title: 'Registrar'
     },
     {
+        path: 'parking-lot/:id',
+        component: ParkingLotComponent,
+        title: 'Parqueadero'
+    },
+    {
         path: 'parking-lot',
         component: ParkingLotComponent,
         title: 'Parqueadero'

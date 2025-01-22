@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Parking } from '../model/interface/parking.type';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +12,19 @@ export class ParkingService {
 
   constructor(private http: HttpClient) { }
 
-  createNewParking(data:any): Observable<any> {
-    return this.http.post(this.BASIC_URL + 'parking', data);
+  fetchParking(data:any): Observable<HttpResponse<Parking>> {
+    return this.http.post<any>(this.BASIC_URL + 'parking', data, {observe: 'response'});
+  }
+
+  getAllParkings() {
+    return this.http.get<Array<Parking>>(this.BASIC_URL + 'parking');
+  }
+
+  invoiceParking(data:any): Observable<HttpResponse<Parking>> {
+    return this.http.post<Parking>(this.BASIC_URL + 'parking/invoice', data, {observe: 'response'});
+  }
+
+  getActiveParking() {
+    return this.http.get<Array<Parking>>(this.BASIC_URL + 'parking/active');
   }
 }

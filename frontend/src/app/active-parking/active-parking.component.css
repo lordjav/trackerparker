@@ -1,0 +1,18 @@
+mat-card {
+    background: lightblue;
+    border-radius: 10px;
+    padding: 20px;
+}
+mat-card-content {
+    display: flex;
+    justify-content: center;
+}
+
+mat-card-footer {
+    text-align: center;
+    padding: 20px;
+}
+mat-icon {
+    width: 120px;
+    height: 120px;    
+}

@@ -1,0 +1,12 @@
+<mat-card appearance="outlined">    
+    <mat-card-content>
+        <mat-icon svgIcon="motorcycle"></mat-icon>
+    </mat-card-content>
+    <mat-card-footer>
+        <mat-card-title>{{ parking.plate }}</mat-card-title>
+        <br>
+            Ingreso: 
+        <br>
+            {{ parking.entryTime | date:'d/MM/y, h:mm a' }}
+    </mat-card-footer>
+</mat-card>
