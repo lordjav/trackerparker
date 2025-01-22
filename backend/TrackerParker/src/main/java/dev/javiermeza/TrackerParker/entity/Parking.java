@@ -1,28 +1,74 @@
 package dev.javiermeza.TrackerParker.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Data
 public class Parking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 6)
+    @Column(nullable = false)
     private String plate;
 
-    private LocalDateTime entry;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date entryTime;
 
-    private LocalDateTime exit;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date exitTime;
 
     private int charge;
 
     private String chargedBy;
+
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
+    public Date getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(Date entryTime) {
+        this.entryTime = entryTime;
+    }
+
+    public Date getExitTime() {
+        return exitTime;
+    }
+
+    public void setExitTime(Date exitTime) {
+        this.exitTime = exitTime;
+    }
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
+    public String getChargedBy() {
+        return chargedBy;
+    }
+
+    public void setChargedBy(String chargedBy) {
+        this.chargedBy = chargedBy;
+    }
 }
