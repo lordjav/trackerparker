@@ -36,6 +36,7 @@ public class ParkingController {
                     .body("Error al procesar la solicitud: " + e.getMessage());
         }
     }
+
     @GetMapping
     public ResponseEntity<List<Parking>> getAllParking() {
         try {

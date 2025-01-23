@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Parking } from '../model/interface/parking.type';
+import { Parking } from '../model/parking.type';
 import { Observable } from 'rxjs';
 
 @Injectable({

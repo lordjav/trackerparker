@@ -5,6 +5,7 @@ import { HistoryComponent } from './history/history.component';
 import { SettingsComponent } from './settings/settings.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MembershipComponent } from './membership/membership.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,11 @@ export const routes: Routes = [
         path: 'parking-lot',
         component: ParkingLotComponent,
         title: 'Parqueadero'
+    },
+    {
+        path: 'membership',
+        component: MembershipComponent,
+        title: 'Membresía'
     },
     {
         path: 'history',

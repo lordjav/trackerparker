@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActiveParkingComponent } from '../active-parking/active-parking.component';
-import { Parking } from '../model/interface/parking.type';
+import { Parking } from '../model/parking.type';
 import { ParkingService } from '../service/parking.service';
 import { catchError } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';

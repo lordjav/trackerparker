@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ParkingService } from '../service/parking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs';
-import { Parking } from '../model/interface/parking.type';
+import { Parking } from '../model/parking.type';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';

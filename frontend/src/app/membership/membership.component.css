@@ -1,0 +1,31 @@
+#membershipList-container {
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    margin: 10px; 
+    padding: 10px;
+}
+
+.membership-card {
+    background: goldenrod;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+mat-card-content {
+    display: flex;
+    justify-content: center;
+}
+
+mat-card-footer {
+    text-align: center;
+    text-wrap: wrap;
+    padding: 20px;
+}
+
+mat-icon {
+    width: 120px;
+    height: 120px;    
+}
+  

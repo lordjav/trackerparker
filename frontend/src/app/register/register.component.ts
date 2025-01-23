@@ -8,8 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ParkingService } from '../service/parking.service';
 import { MatButtonModule } from '@angular/material/button';
 import { catchError } from 'rxjs';
-import { Parking } from '../model/interface/parking.type';
-import { DatePipe } from '@angular/common';
+import { Parking } from '../model/parking.type';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 import { ElapsedTimePipe } from '../pipes/elapsed-time.pipe';
 
 @Component({
@@ -22,6 +22,7 @@ import { ElapsedTimePipe } from '../pipes/elapsed-time.pipe';
     MatCardModule, 
     MatButtonModule,
     DatePipe,
+    CurrencyPipe,
     ElapsedTimePipe
   ],
   templateUrl: './register.component.html',
@@ -39,8 +40,10 @@ export class RegisterComponent {
   });
   
   existingParking: Parking | null = null;
-  
+   
   timeInParking: number | null = null;
+
+  currentInvoice: number | null = null;
   
   constructor(private snackBar: MatSnackBar, 
     private parkingService: ParkingService) {}
@@ -71,6 +74,7 @@ export class RegisterComponent {
           this.existingParking = parkingRes;
           let now = new Date();
           this.timeInParking = (now.getTime() - new Date(parkingRes!.entryTime).getTime());
+          this.currentInvoice = this.timeInParking / 60000;
           this.parkingSearchForm.get('plate')?.setValue('');
         }
       });

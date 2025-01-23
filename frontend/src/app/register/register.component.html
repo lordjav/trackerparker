@@ -21,7 +21,9 @@
       <br>
       Número de registro: {{ existingParking.id }}
       <br>
-      Hora de entrada: {{ existingParking.entryTime | date:'d/MM/y, h:mm a' }}
+      Hora de entrada: {{ existingParking.entryTime | date:'d/MM/y, h:mm a' }}.
+      <br>
+      Facturación actual: {{ currentInvoice | currency:'USD':'symbol':'1.0-0' }}.
       <br>
       Tiempo en parqueadero: {{ timeInParking! | elapsedTime }}
       <br>
