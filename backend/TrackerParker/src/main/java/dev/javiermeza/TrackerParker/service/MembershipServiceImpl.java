@@ -53,4 +53,8 @@ public class MembershipServiceImpl implements MembershipService {
 
         return membershipBilledRepository.save(newMembershipBill);
     }
+
+    public List<MembershipBilled> getAllBillingsByMembershipId(Long membershipId) {
+        return membershipBilledRepository.findAllByMembershipId(membershipId);
+    }
 }

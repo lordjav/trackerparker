@@ -2,30 +2,41 @@
     display: flex; 
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between; 
+    justify-content: space-evenly; 
     margin: 10px; 
-    padding: 10px;
+    padding: 20px;
 }
 
 .membership-card {
     background: goldenrod;
     border-radius: 10px;
     padding: 20px;
+    margin: 10px;
+    width: 200px;
 }
 
 mat-card-content {
     display: flex;
     justify-content: center;
+    padding: 10px;
+}
+
+.mat-mdc-card-content:first-child {
+    padding-top: 0;
+}
+
+mat-card-title {
+    height: 100px;
 }
 
 mat-card-footer {
+    margin: auto;
     text-align: center;
     text-wrap: wrap;
-    padding: 20px;
 }
 
 mat-icon {
-    width: 120px;
-    height: 120px;    
+    width: 100px;
+    height: 100px;
 }
   

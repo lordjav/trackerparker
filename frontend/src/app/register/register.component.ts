@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ParkingService } from '../service/parking.service';
 import { MatButtonModule } from '@angular/material/button';
 import { catchError } from 'rxjs';
 import { Parking } from '../model/parking.type';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { ElapsedTimePipe } from '../pipes/elapsed-time.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -45,29 +46,30 @@ export class RegisterComponent {
 
   currentInvoice: number | null = null;
   
-  constructor(private snackBar: MatSnackBar, 
-    private parkingService: ParkingService) {}
+  readonly dialog = inject(MatDialog);
+
+  constructor(private parkingService: ParkingService) {}
     
   processParking() {
     this.parkingService.fetchParking(this.parkingSearchForm.value)
       .pipe(
         catchError((err, caught) => {
-        this.snackBar.open(
+          this.openDialog(
+          "Error",
           `Hubo un error: ${err.error}`,
           "OK",
-          {duration: 30000}
-        ); 
-        console.error(err);
-        return caught;
-        })
+          ); 
+          console.error(err);
+          return caught;
+        })        
     ).subscribe(response => {
         const parkingRes = response.body;
         const parkingResStatus = response.status;
         if (parkingResStatus === 201) {
-          this.snackBar.open(
-            `Vehículo ${parkingRes!.plate} ingresado exitosamente`, 
-            "OK", 
-            {duration: 30000}
+          this.openDialog(
+            "Ingreso exitoso", 
+            `Vehículo ${parkingRes!.plate} ingresado exitosamente`,
+            "OK"
           );
         }
         else if (parkingResStatus === 200) {
@@ -85,28 +87,42 @@ export class RegisterComponent {
       this.parkingService.invoiceParking(this.existingParking)
         .pipe(
           catchError((err, caught) => {
-          this.snackBar.open(
-            `Hubo un error: ${err.error}`,
-            "OK",
-            {duration: 30000}
-          ); 
-          console.error(err);
-          return caught;
+            this.openDialog(
+              "Error",
+              `Hubo un error: ${err.error}`,
+              "OK"
+            ); 
+            console.error(err);
+            return caught;
           })
       ).subscribe(response => {
         const parkingRes = response.body;
         const parkingResStatus = response.status;
         if (parkingResStatus === 202) {
-          this.snackBar.open(
+          this.openDialog(
+            "Facturación exitosa",
             `Vehículo ${parkingRes!.plate} facturado exitosamente en $${parkingRes!.charge} pesos`, 
             "OK", 
-            {duration: 30000}
           );
           this.existingParking = null;
           this.timeInParking = null;
         }
       });
     }
+  }
+
+  openDialog(dialogTitle:any, dialogContent:any, dialogButtonText:any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: dialogTitle,
+        content: dialogContent,
+        button: dialogButtonText
+      }
+    });
+
+    setTimeout(() => {
+      dialogRef.close();
+    }, 30000);
   }
 }
 

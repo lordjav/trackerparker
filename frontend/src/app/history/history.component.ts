@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ParkingService } from '../service/parking.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs';
 import { Parking } from '../model/parking.type';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule} from '@angular/material/card';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-history',
@@ -32,6 +34,8 @@ export class HistoryComponent {
     'chargedBy'
   ];
   dataSource = new MatTableDataSource();
+
+  readonly dialog = inject(MatDialog);  
   
   constructor(
     private parkingsService: ParkingService,
@@ -49,11 +53,29 @@ export class HistoryComponent {
   getparkings() {
     this.parkingsService.getAllParkings()
     .pipe(catchError((err, caught) => {
-            this.snackBar.open(`Hubo un error: ${err.error}`, "Ok", {duration: 5000}); 
-            console.error(err);
-            return caught;
-          })).subscribe(parkings => {            
-            this.dataSource = new MatTableDataSource<Parking | unknown>(parkings);
+      this.openDialog(
+        "Error",
+        `Hubo un error: ${err.error}`,
+        "OK"
+      );
+      console.error(err);
+      return caught;
+    })).subscribe(parkings => {            
+      this.dataSource = new MatTableDataSource<Parking | unknown>(parkings);
     });
+  }
+
+  openDialog(dialogTitle:any, dialogContent:any, dialogButtonText:any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: dialogTitle,
+        content: dialogContent,
+        button: dialogButtonText
+      }
+    });
+
+    setTimeout(() => {
+      dialogRef.close();
+    }, 30000);
   }
 }

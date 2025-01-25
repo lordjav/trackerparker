@@ -4,9 +4,10 @@
     </mat-card-content>
     <mat-card-footer>
         <mat-card-title>{{ parking.plate }}</mat-card-title>
-        <br>
             Ingreso: 
         <br>
-            {{ parking.entryTime | date:'d/MM/y, h:mm a' }}
+            {{ parking.entryTime | date:'d/MM/y' }}
+        <br>
+            {{ parking.entryTime | date:'h:mm a' }}
     </mat-card-footer>
 </mat-card>

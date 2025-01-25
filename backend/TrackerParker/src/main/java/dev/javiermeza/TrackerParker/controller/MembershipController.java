@@ -40,7 +40,7 @@ public class MembershipController {
     }
 
     @PostMapping("/bill")
-    public ResponseEntity<?> billMembership (@RequestBody BillMembershipDTO billMembershipDTO) {
+    public ResponseEntity<?> billMembership(@RequestBody BillMembershipDTO billMembershipDTO) {
         try {
             Long membershipId = billMembershipDTO.getMembershipId();
             String billedBy = billMembershipDTO.getBilledBy();
@@ -51,6 +51,17 @@ public class MembershipController {
             return ResponseEntity.status(HttpStatus.CREATED).body(membershipBilled);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar la solicitud: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{membershipId}")
+    public ResponseEntity<?> getAllMembershipBilledById(@PathVariable Long membershipId) {
+        try {
+            List<MembershipBilled> membershipBilledList = membershipService.getAllBillingsByMembershipId(membershipId);
+            return ResponseEntity.status(HttpStatus.OK).body(membershipBilledList);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Error al procesar la solicitud: " + e.getMessage());
         }
     }
