@@ -1,14 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, Injectable, ViewChild } from '@angular/core';
 import { ParkingService } from '../service/parking.service';
-import { catchError } from 'rxjs';
+import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { Parking } from '../model/parking.type';
 import { MatCardModule} from '@angular/material/card';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DatePipe, CurrencyPipe } from '@angular/common';
-import { DialogComponent } from '../dialog/dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginator, MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { HalResponse } from '../model/hal-response';
+
+@Injectable()
+export class MyCustomPaginatorIntl extends MatPaginatorIntl {
+
+  override itemsPerPageLabel = 'Registros por página';
+}
 
 @Component({
   selector: 'app-history',
@@ -18,11 +25,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     MatInputModule, 
     MatFormFieldModule, 
+    MatPaginatorModule,
     DatePipe,
     CurrencyPipe
   ],
+  providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
   templateUrl: './history.component.html',
-  styles: `mat-card {margin: 10px; padding: 10px;}`
+  styles: `
+    mat-card {margin: 10px; padding: 10px;}
+    #still-parking {color: red;}
+    .example-loading-shade {display:flex; justify-content:center; align-items:center;}
+  `
 })
 export class HistoryComponent {
   displayedColumns: string[] = [
@@ -33,34 +46,48 @@ export class HistoryComponent {
     'charge', 
     'chargedBy'
   ];
-  dataSource = new MatTableDataSource();
 
-  dialog = inject(DialogComponent);
-  
-  constructor(private parkingsService: ParkingService) {}
+  parkings: Parking[] = [];
 
-  ngOnInit() {    
-    this.getparkings();
+  dataSource!: MatTableDataSource<Parking>;
+
+  resultsLength = 0;
+  isLoadingResults = true;
+
+  showFirstLastButtons = true;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+ 
+  constructor(private parkingService: ParkingService) {}
+
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.parkingService.getAllParkingsPageable(
+            this.paginator.pageIndex,
+            this.paginator.pageSize
+          ).pipe(catchError(() => of(null)));
+        }),
+        map((response: HalResponse | null) => {
+          this.isLoadingResults = false;
+
+          if (response === null) {
+            return [];
+          }
+          this.resultsLength = response.page.totalElements;
+          return response._embedded.parkingList;
+        }),
+      )
+      .subscribe((parkings) => {
+        this.dataSource = new MatTableDataSource(parkings);
+      });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getparkings() {
-    this.parkingsService.getAllParkings()
-    .pipe(catchError((err, caught) => {
-      this.dialog.openDialog(
-        "Error",
-        `Hubo un error: ${err.error}`,
-        "OK",
-        30000
-      );
-      console.error(err);
-      return caught;
-    })).subscribe(parkings => {            
-      this.dataSource = new MatTableDataSource<Parking | unknown>(parkings);
-    });
   }
 }

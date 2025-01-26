@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Parking } from '../model/parking.type';
 import { Observable } from 'rxjs';
+import { HalResponse } from '../model/hal-response';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ParkingService {
     return this.http.post<any>(this.BASIC_URL + 'parking', data, {observe: 'response'});
   }
 
-  getAllParkings() {
-    return this.http.get<Array<Parking>>(this.BASIC_URL + 'parking');
+  getAllParkingsPageable(pageNumber: number, pageSize: number): Observable<HalResponse> {
+    return this.http.get<HalResponse>(`${this.BASIC_URL}parking?page=${pageNumber}&size=${pageSize}`);
   }
 
   invoiceParking(data:any): Observable<HttpResponse<Parking>> {

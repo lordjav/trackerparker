@@ -19,6 +19,7 @@ const MOTORCYCLE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="48" heig
     MatIconModule,
     RouterLink
   ],
+  providers: [DialogComponent],
   templateUrl: './membership.component.html',
   styleUrl: './membership.component.css'
 })

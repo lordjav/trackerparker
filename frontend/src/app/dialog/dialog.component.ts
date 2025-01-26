@@ -9,7 +9,6 @@ import {
   MatDialog,
 } from "@angular/material/dialog";
 
-
 @Component({
   selector: 'dialog',
   templateUrl: 'dialog.component.html',

@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
     DatePipe,
     MatTableModule
   ],
+  providers: [DialogComponent],
   templateUrl: './membership-with-billings.component.html',
   styleUrl: './membership-with-billings.component.css'
 })

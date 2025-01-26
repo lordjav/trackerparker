@@ -12,6 +12,7 @@ import { DialogComponent } from '../dialog/dialog.component';
     ActiveParkingComponent,
     MatCardModule,
   ],
+  providers: [DialogComponent],
   templateUrl: './parking-lot.component.html',
   styles: `
     mat-card {

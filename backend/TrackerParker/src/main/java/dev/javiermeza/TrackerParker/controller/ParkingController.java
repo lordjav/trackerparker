@@ -4,6 +4,11 @@ import dev.javiermeza.TrackerParker.entity.Parking;
 import dev.javiermeza.TrackerParker.service.ParkingService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +43,10 @@ public class ParkingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Parking>> getAllParking() {
+    HttpEntity<?> getAllParking(Pageable pageable, PagedResourcesAssembler<Parking> assembler) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(parkingService.getAllParking());
+            Page<Parking> parkingPage = parkingService.getAllParking(pageable);
+            return ResponseEntity.ok(assembler.toModel(parkingPage));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
