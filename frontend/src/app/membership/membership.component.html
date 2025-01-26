@@ -1,7 +1,11 @@
 <mat-card id="membershipList-container">
     @for (membership of membershipList; track membership.id) {
         <div>
-            <mat-card class="membership-card" appearance="outlined">    
+            <mat-card 
+            class="membership-card" 
+            appearance="outlined"
+            routerLink="/membership/{{ membership.id }}"
+            >    
                 <mat-card-content>
                     <mat-icon svgIcon="motorcycle"></mat-icon>
                 </mat-card-content>

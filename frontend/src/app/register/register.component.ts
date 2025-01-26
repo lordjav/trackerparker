@@ -10,7 +10,6 @@ import { catchError } from 'rxjs';
 import { Parking } from '../model/parking.type';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { ElapsedTimePipe } from '../pipes/elapsed-time.pipe';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -26,6 +25,7 @@ import { DialogComponent } from '../dialog/dialog.component';
     CurrencyPipe,
     ElapsedTimePipe
   ],
+  providers: [DialogComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -45,8 +45,8 @@ export class RegisterComponent {
   timeInParking: number | null = null;
 
   currentInvoice: number | null = null;
-  
-  readonly dialog = inject(MatDialog);
+
+  dialog = inject(DialogComponent);
 
   constructor(private parkingService: ParkingService) {}
     
@@ -54,10 +54,11 @@ export class RegisterComponent {
     this.parkingService.fetchParking(this.parkingSearchForm.value)
       .pipe(
         catchError((err, caught) => {
-          this.openDialog(
+          this.dialog.openDialog(
           "Error",
           `Hubo un error: ${err.error}`,
           "OK",
+          30000
           ); 
           console.error(err);
           return caught;
@@ -66,10 +67,11 @@ export class RegisterComponent {
         const parkingRes = response.body;
         const parkingResStatus = response.status;
         if (parkingResStatus === 201) {
-          this.openDialog(
+          this.dialog.openDialog(
             "Ingreso exitoso", 
             `Vehículo ${parkingRes!.plate} ingresado exitosamente`,
-            "OK"
+            "OK",
+            30000
           );
         }
         else if (parkingResStatus === 200) {
@@ -87,10 +89,11 @@ export class RegisterComponent {
       this.parkingService.invoiceParking(this.existingParking)
         .pipe(
           catchError((err, caught) => {
-            this.openDialog(
+            this.dialog.openDialog(
               "Error",
               `Hubo un error: ${err.error}`,
-              "OK"
+              "OK",
+              30000
             ); 
             console.error(err);
             return caught;
@@ -99,10 +102,11 @@ export class RegisterComponent {
         const parkingRes = response.body;
         const parkingResStatus = response.status;
         if (parkingResStatus === 202) {
-          this.openDialog(
+          this.dialog.openDialog(
             "Facturación exitosa",
             `Vehículo ${parkingRes!.plate} facturado exitosamente en $${parkingRes!.charge} pesos`, 
             "OK", 
+            30000
           );
           this.existingParking = null;
           this.timeInParking = null;
@@ -111,18 +115,6 @@ export class RegisterComponent {
     }
   }
 
-  openDialog(dialogTitle:any, dialogContent:any, dialogButtonText:any) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: dialogTitle,
-        content: dialogContent,
-        button: dialogButtonText
-      }
-    });
-
-    setTimeout(() => {
-      dialogRef.close();
-    }, 30000);
-  }
+  
 }
 

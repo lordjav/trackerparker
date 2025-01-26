@@ -1,0 +1,13 @@
+mat-card {
+    margin: 10px 20px;
+}
+
+.membership-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.membership-content > div {
+    width: 50%;
+}

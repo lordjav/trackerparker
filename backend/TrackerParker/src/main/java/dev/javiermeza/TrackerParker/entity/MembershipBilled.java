@@ -11,9 +11,7 @@ public class MembershipBilled {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "membership_id")
-    private Membership membership;
+    private Long membershipId;
 
     private String billedBy;
 
@@ -28,12 +26,12 @@ public class MembershipBilled {
         this.id = id;
     }
 
-    public Membership getMembership() {
-        return membership;
+    public Long getMembershipId() {
+        return membershipId;
     }
 
-    public void setMembership(Membership membership) {
-        this.membership = membership;
+    public void setMembershipId(Long membershipId) {
+        this.membershipId = membershipId;
     }
 
     public String getBilledBy() {

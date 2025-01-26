@@ -47,7 +47,7 @@ public class MembershipServiceImpl implements MembershipService {
 
     public MembershipBilled createMembershipBill(Membership membership, String billedBy) {
         MembershipBilled newMembershipBill = new MembershipBilled();
-        newMembershipBill.setMembership(membership);
+        newMembershipBill.setMembershipId(membership.getId());
         newMembershipBill.setBilledBy(billedBy);
         newMembershipBill.setBillingDate(new Date());
 
@@ -57,4 +57,9 @@ public class MembershipServiceImpl implements MembershipService {
     public List<MembershipBilled> getAllBillingsByMembershipId(Long membershipId) {
         return membershipBilledRepository.findAllByMembershipId(membershipId);
     }
+
+    public List<MembershipBilled> getAllBillingsByMembershipIdOrderByIdDesc(Long membershipId) {
+        return membershipBilledRepository.findAllByMembershipIdOrderByIdDesc(membershipId);
+    }
+
 }

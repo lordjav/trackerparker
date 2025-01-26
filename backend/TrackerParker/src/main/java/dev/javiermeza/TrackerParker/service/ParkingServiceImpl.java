@@ -32,6 +32,10 @@ public class ParkingServiceImpl implements ParkingService {
         return parkingRepository.findAll(Sort.by(Sort.Direction.DESC, "entryTime"));
     }
 
+    public List<Parking> getParkingWithPagination(int page) {
+        parkingRepository
+    }
+
     public Parking getParkingById(Long parkingId) {
         Optional<Parking> optionalParking = parkingRepository.findById(parkingId);
         if (optionalParking.isPresent()) {

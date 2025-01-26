@@ -4,7 +4,6 @@ import { Parking } from '../model/parking.type';
 import { ParkingService } from '../service/parking.service';
 import { catchError } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -29,18 +28,22 @@ export class ParkingLotComponent {
   
   activeParkingList: Parking[] = [];
 
-  readonly dialog = inject(MatDialog);
+  dialog = inject(DialogComponent);
 
   constructor(private parkingService: ParkingService) {}
 
+  ngOnInit() {
+    this.getActiveParking();
+  }
   
   getActiveParking() {
     this.parkingService.getActiveParking().pipe(
       catchError((err, caught) => {
-        this.openDialog(
+        this.dialog.openDialog(
           "Error",
           `Hubo un error: ${err.error}`,
           "OK",
+          30000
         ); 
         console.error(err);
         return caught;
@@ -48,23 +51,5 @@ export class ParkingLotComponent {
         this.activeParkingList = response;
       }
     )
-  }
-
-  openDialog(dialogTitle:any, dialogContent:any, dialogButtonText:any) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: dialogTitle,
-        content: dialogContent,
-        button: dialogButtonText
-      }
-    });
-
-    setTimeout(() => {
-      dialogRef.close();
-    }, 30000);
-  }
-
-  ngOnInit() {
-    this.getActiveParking();
   }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { Ilink } from '../model/interface/links';
+import { Ilink } from '../model/links';
 
 @Component({
   selector: 'app-navbar',

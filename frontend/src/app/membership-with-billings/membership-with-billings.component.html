@@ -1,0 +1,45 @@
+<mat-card id="membership" class="example-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>{{ membership?.client }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="membership-content">
+        <div>
+            Id de la membresía: {{ membership?.id }}
+            <br>
+            Identificación: {{ membership?.clientId }}
+            <br>
+            Teléfono: {{ membership?.clientPhone }}
+            <br>
+            Correo: {{ membership?.clientEmail }}
+        </div>
+        <div>
+            Tipo de vehículo: {{ membership?.vehicleType }}
+            <br>
+            Placa: {{ membership?.plate }}
+            <br>
+            Frecuencia de pago: {{ membership?.frequency }}
+            <br>
+            Valor de la membresía: {{ membership?.fee | currency:'USD':'symbol':'1.0-0' }}
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-content>
+        <table mat-table [dataSource]="membershipBillings" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="billedBy">
+                <th mat-header-cell *matHeaderCellDef>Cobrado por</th>
+                <td mat-cell *matCellDef="let element"> {{element.billedBy}} </td>
+            </ng-container>
+            <ng-container matColumnDef="billingDate">
+                <th mat-header-cell *matHeaderCellDef>Fecha de cobro</th>
+                <td mat-cell *matCellDef="let element"> {{element.billingDate | date:'d/MM/y, h:mm a' }} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table> 
+    </mat-card-content>
+</mat-card>

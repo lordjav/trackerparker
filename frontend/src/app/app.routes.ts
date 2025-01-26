@@ -6,6 +6,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MembershipComponent } from './membership/membership.component';
+import { MembershipWithBillingsComponent } from './membership-with-billings/membership-with-billings.component';
 
 export const routes: Routes = [
     {
@@ -24,9 +25,14 @@ export const routes: Routes = [
         title: 'Parqueadero'
     },
     {
+        path: 'membership/:id',
+        component: MembershipWithBillingsComponent,
+        title: 'Membresía'
+    },
+    {
         path: 'membership',
         component: MembershipComponent,
-        title: 'Membresía'
+        title: 'Membresías'
     },
     {
         path: 'history',

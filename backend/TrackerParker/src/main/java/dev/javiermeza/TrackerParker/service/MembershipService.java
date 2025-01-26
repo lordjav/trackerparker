@@ -18,4 +18,6 @@ public interface MembershipService {
     MembershipBilled createMembershipBill(Membership membership, String billedBy);
 
     List<MembershipBilled> getAllBillingsByMembershipId(Long membershipId);
+
+    List<MembershipBilled> getAllBillingsByMembershipIdOrderByIdDesc(Long membershipId);
 }

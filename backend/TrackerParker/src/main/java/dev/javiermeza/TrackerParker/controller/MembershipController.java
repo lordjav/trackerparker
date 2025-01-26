@@ -1,6 +1,7 @@
 package dev.javiermeza.TrackerParker.controller;
 
 import dev.javiermeza.TrackerParker.DTO.BillMembershipDTO;
+import dev.javiermeza.TrackerParker.DTO.MembershipWithBillingsDTO;
 import dev.javiermeza.TrackerParker.entity.Membership;
 import dev.javiermeza.TrackerParker.entity.MembershipBilled;
 import dev.javiermeza.TrackerParker.service.MembershipService;
@@ -56,10 +57,13 @@ public class MembershipController {
     }
 
     @GetMapping("/{membershipId}")
-    public ResponseEntity<?> getAllMembershipBilledById(@PathVariable Long membershipId) {
+    public ResponseEntity<?> getMembershipWithBillings(@PathVariable Long membershipId) {
         try {
-            List<MembershipBilled> membershipBilledList = membershipService.getAllBillingsByMembershipId(membershipId);
-            return ResponseEntity.status(HttpStatus.OK).body(membershipBilledList);
+            Membership membership = membershipService.getMembershipById(membershipId);
+            List<MembershipBilled> membershipBilledList = membershipService.getAllBillingsByMembershipIdOrderByIdDesc(membershipId);
+
+            MembershipWithBillingsDTO membershipWithBillings = new MembershipWithBillingsDTO(membership, membershipBilledList);
+            return ResponseEntity.status(HttpStatus.OK).body(membershipWithBillings);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Error al procesar la solicitud: " + e.getMessage());

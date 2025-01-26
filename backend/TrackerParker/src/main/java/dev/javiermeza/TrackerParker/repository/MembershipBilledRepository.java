@@ -10,4 +10,6 @@ import java.util.List;
 public interface MembershipBilledRepository extends JpaRepository<MembershipBilled, Long>{
 
     List<MembershipBilled> findAllByMembershipId(Long membershipId);
+
+    List<MembershipBilled> findAllByMembershipIdOrderByIdDesc(Long membershipId);
 }
