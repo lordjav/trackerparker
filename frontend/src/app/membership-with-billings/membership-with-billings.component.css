@@ -1,4 +1,4 @@
-mat-card {
+mat-card, mat-card-footer {
     margin: 10px 20px;
 }
 
@@ -10,4 +10,10 @@ mat-card {
 
 .membership-content > div {
     width: 50%;
+}
+
+.add-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
 }

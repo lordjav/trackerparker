@@ -1,6 +1,5 @@
 package dev.javiermeza.TrackerParker.service;
 
-import dev.javiermeza.TrackerParker.DTO.ParkingPageAndTotalDTO;
 import dev.javiermeza.TrackerParker.entity.Parking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

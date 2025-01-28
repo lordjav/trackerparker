@@ -25,7 +25,7 @@ public class ParkingController {
     private ParkingService parkingService;
 
     @PostMapping
-    public ResponseEntity<?> fetchParking (@RequestBody Parking parking) {
+    public ResponseEntity<?> fetchParking(@RequestBody Parking parking) {
         try {
             Optional<Parking> possibleParking = parkingService.getParkingByPlate(parking);
             if (possibleParking.isEmpty() || possibleParking.get().getExitTime() != null) {
@@ -71,7 +71,7 @@ public class ParkingController {
         }
     }
 
-    @PostMapping("/invoice")
+    @PutMapping("/invoice")
     public ResponseEntity<?> invoiceParking(@RequestBody Parking parking) {
         try {
             Parking invoicingParking = parkingService.invoiceParking(parking);

@@ -5,4 +5,5 @@ export type Parking = {
     exitTime: Date,
     charge: number,
     chargedBy: string,
+    comment: string | null
 }

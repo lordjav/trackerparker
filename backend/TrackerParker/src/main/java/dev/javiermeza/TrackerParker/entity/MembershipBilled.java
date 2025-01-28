@@ -17,6 +17,8 @@ public class MembershipBilled {
 
     private Date billingDate;
 
+    private String comment;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -49,4 +51,13 @@ public class MembershipBilled {
     public void setBillingDate(Date billingDate) {
         this.billingDate = billingDate;
     }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
 }

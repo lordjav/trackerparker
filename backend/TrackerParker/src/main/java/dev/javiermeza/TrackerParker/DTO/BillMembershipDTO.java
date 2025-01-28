@@ -8,7 +8,6 @@ public class BillMembershipDTO {
 
     // Getters and Setters
 
-
     public Long getMembershipId() {
         return membershipId;
     }

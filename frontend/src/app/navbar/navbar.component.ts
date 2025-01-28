@@ -8,7 +8,7 @@ import { Ilink } from '../model/links';
   selector: 'app-navbar',
   imports: [MatTabsModule, RouterOutlet, RouterLink, MatToolbarModule],
   templateUrl: './navbar.component.html',
-  styles: 'nav {width: 100%}'
+  styleUrl: 'navbar.component.css',
 })
 export class NavbarComponent {
   links: Ilink[] = [

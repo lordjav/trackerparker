@@ -23,6 +23,8 @@ public class Parking {
 
     private String chargedBy;
 
+    private String comment;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -71,4 +73,13 @@ public class Parking {
     public void setChargedBy(String chargedBy) {
         this.chargedBy = chargedBy;
     }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment() {
+        this.comment = comment;
+    }
+
 }

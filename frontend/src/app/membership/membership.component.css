@@ -40,8 +40,14 @@ mat-card-footer {
     text-wrap: wrap;
 }
 
-mat-icon {
+mat-card-content > mat-icon {
     width: 100px;
     height: 100px;
+}
+
+.add-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
 }
   

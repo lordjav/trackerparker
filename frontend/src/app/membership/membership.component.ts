@@ -4,6 +4,7 @@ import { MembershipService } from '../service/membership.service';
 import { catchError } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DialogComponent } from '../dialog/dialog.component';
 import { RouterLink } from '@angular/router';
@@ -17,6 +18,7 @@ const MOTORCYCLE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="48" heig
   imports: [
     MatCardModule,
     MatIconModule,
+    MatButtonModule,
     RouterLink
   ],
   providers: [DialogComponent],

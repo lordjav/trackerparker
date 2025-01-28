@@ -6,6 +6,7 @@ import { catchError } from 'rxjs';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
@@ -14,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     MatCardModule, 
     MatIconModule, 
+    MatButtonModule,
     CurrencyPipe, 
     DatePipe,
     MatTableModule
@@ -29,7 +31,7 @@ export class MembershipWithBillingsComponent {
 
   membershipBillings: Array<MembershipBill> = [];
 
-  displayedColumns: string[] = ['id', 'billedBy', 'billingDate'];
+  displayedColumns: string[] = ['id', 'billedBy', 'billingDate', 'comments'];
 
   dialog = inject(DialogComponent);
   

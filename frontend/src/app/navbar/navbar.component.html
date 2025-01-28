@@ -1,5 +1,5 @@
 <mat-toolbar>
-    <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <nav id="main-navbar" mat-tab-nav-bar [tabPanel]="tabPanel">
         @for (link of links; track link.section) {
           <a mat-tab-link
             (click)="activeLink = link.url"

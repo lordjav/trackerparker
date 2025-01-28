@@ -1,14 +1,11 @@
 package dev.javiermeza.TrackerParker.service;
 
-import dev.javiermeza.TrackerParker.DTO.ParkingPageAndTotalDTO;
 import dev.javiermeza.TrackerParker.entity.Parking;
 import dev.javiermeza.TrackerParker.repository.ParkingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,14 +35,6 @@ public class ParkingServiceImpl implements ParkingService {
 
     public Page<Parking> getAllParking(Pageable pageable) {
         return parkingRepository.findAllByOrderByEntryTimeDesc(pageable);
-
-        /*int pageSize = 5;
-        PageRequest pageRequest = PageRequest.of(
-                pageNumber,
-                pageSize,
-                Sort.by(Sort.Direction.DESC, "entryTime"));
-
-        return parkingRepository.findAll(pageRequest);*/
     }
 
     public Parking getParkingById(Long parkingId) {

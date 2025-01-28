@@ -34,7 +34,12 @@ export class MyCustomPaginatorIntl extends MatPaginatorIntl {
   styles: `
     mat-card {margin: 10px; padding: 10px;}
     #still-parking {color: red;}
-    .example-loading-shade {display:flex; justify-content:center; align-items:center;}
+    .example-loading-shade {
+      display:flex;       
+      justify-content:center; 
+      align-items:center;
+      flex-direction: column;
+    }
   `
 })
 export class HistoryComponent {
@@ -44,7 +49,8 @@ export class HistoryComponent {
     'entryTime', 
     'exitTime', 
     'charge', 
-    'chargedBy'
+    'chargedBy',
+    'comment'
   ];
 
   parkings: Parking[] = [];
@@ -61,29 +67,28 @@ export class HistoryComponent {
   constructor(private parkingService: ParkingService) {}
 
   ngAfterViewInit() {
-    this.paginator.page
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.parkingService.getAllParkingsPageable(
-            this.paginator.pageIndex,
-            this.paginator.pageSize
-          ).pipe(catchError(() => of(null)));
-        }),
-        map((response: HalResponse | null) => {
-          this.isLoadingResults = false;
+    this.paginator.page.pipe(
+      startWith({}),
+      switchMap(() => {
+        this.isLoadingResults = true;
+        return this.parkingService.getAllParkingsPageable(
+          this.paginator.pageIndex,
+          this.paginator.pageSize
+        ).pipe(catchError(() => of(null)));
+      }),
+      map((response: HalResponse | null) => {
+        this.isLoadingResults = false;
 
-          if (response === null) {
-            return [];
-          }
-          this.resultsLength = response.page.totalElements;
-          return response._embedded.parkingList;
-        }),
-      )
-      .subscribe((parkings) => {
-        this.dataSource = new MatTableDataSource(parkings);
-      });
+        if (response === null) {
+          return [];
+        }
+        this.resultsLength = response.page.totalElements;
+        return response._embedded.parkingList;
+      }),
+    )
+    .subscribe((parkings) => {
+      this.dataSource = new MatTableDataSource(parkings);
+    });
   }
 
   applyFilter(event: Event) {

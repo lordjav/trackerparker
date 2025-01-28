@@ -21,8 +21,8 @@ export class ParkingService {
     return this.http.get<HalResponse>(`${this.BASIC_URL}parking?page=${pageNumber}&size=${pageSize}`);
   }
 
-  invoiceParking(data:any): Observable<HttpResponse<Parking>> {
-    return this.http.post<Parking>(this.BASIC_URL + 'parking/invoice', data, {observe: 'response'});
+  invoiceParking(parking:Parking): Observable<HttpResponse<Parking>> {
+    return this.http.put<Parking>(this.BASIC_URL + 'parking/invoice', parking, {observe: 'response'});
   }
 
   getActiveParking() {

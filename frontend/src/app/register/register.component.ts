@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule, FormControl, Validators, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, Validators, FormGroup, FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { ParkingService } from '../service/parking.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,8 @@ import { DialogComponent } from '../dialog/dialog.component';
   selector: 'app-register',
   imports: [
     MatFormFieldModule, 
-    MatInputModule, 
+    MatInputModule,
+    FormsModule, 
     MatIconModule, 
     ReactiveFormsModule, 
     MatCardModule, 
@@ -40,6 +41,8 @@ export class RegisterComponent {
     chargedBy: new FormControl('Javier')
   });
   
+  comment = new FormControl('');
+
   existingParking: Parking | null = null;
    
   timeInParking: number | null = null;
@@ -86,6 +89,7 @@ export class RegisterComponent {
 
   invoiceParking() {
     if (this.existingParking) {
+      this.existingParking.comment = this.comment.value;
       this.parkingService.invoiceParking(this.existingParking)
         .pipe(
           catchError((err, caught) => {

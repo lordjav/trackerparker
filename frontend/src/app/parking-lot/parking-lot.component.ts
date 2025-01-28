@@ -14,16 +14,7 @@ import { DialogComponent } from '../dialog/dialog.component';
   ],
   providers: [DialogComponent],
   templateUrl: './parking-lot.component.html',
-  styles: `
-    mat-card {
-      display: flex; 
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-evenly;      
-      margin: 10px;
-      padding: 20px;
-      }
-  `
+  styleUrl: 'parking-lot.component.css'
 })
 export class ParkingLotComponent {
   

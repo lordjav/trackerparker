@@ -1,8 +1,8 @@
 package dev.javiermeza.TrackerParker.service;
 
-import dev.javiermeza.TrackerParker.entity.Membership;
-import dev.javiermeza.TrackerParker.entity.MembershipBilled;
+import dev.javiermeza.TrackerParker.entity.*;
 import dev.javiermeza.TrackerParker.repository.MembershipBilledRepository;
+import dev.javiermeza.TrackerParker.repository.MembershipCommentRepository;
 import dev.javiermeza.TrackerParker.repository.MembershipRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,9 @@ public class MembershipServiceImpl implements MembershipService {
 
     @Autowired
     private MembershipBilledRepository membershipBilledRepository;
+
+    @Autowired
+    private MembershipCommentRepository membershipCommentRepository;
 
     public Membership createMembership(Membership membership) {
         if (membership.getPlate() == null || membership.getPlate().trim().isEmpty()) {
@@ -62,4 +65,7 @@ public class MembershipServiceImpl implements MembershipService {
         return membershipBilledRepository.findAllByMembershipIdOrderByIdDesc(membershipId);
     }
 
+    public List<MembershipComment> getMembershipCommentsByMembershipId(Long membershipId) {
+        return membershipCommentRepository.findByMembershipIdOrderByCreationDateDesc(membershipId);
+    }
 }

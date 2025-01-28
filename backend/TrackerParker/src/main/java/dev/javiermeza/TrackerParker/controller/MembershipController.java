@@ -4,6 +4,7 @@ import dev.javiermeza.TrackerParker.DTO.BillMembershipDTO;
 import dev.javiermeza.TrackerParker.DTO.MembershipWithBillingsDTO;
 import dev.javiermeza.TrackerParker.entity.Membership;
 import dev.javiermeza.TrackerParker.entity.MembershipBilled;
+import dev.javiermeza.TrackerParker.entity.MembershipComment;
 import dev.javiermeza.TrackerParker.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,8 +62,13 @@ public class MembershipController {
         try {
             Membership membership = membershipService.getMembershipById(membershipId);
             List<MembershipBilled> membershipBilledList = membershipService.getAllBillingsByMembershipIdOrderByIdDesc(membershipId);
+            List<MembershipComment> membershipComments = membershipService.getMembershipCommentsByMembershipId(membershipId);
 
-            MembershipWithBillingsDTO membershipWithBillings = new MembershipWithBillingsDTO(membership, membershipBilledList);
+            MembershipWithBillingsDTO membershipWithBillings = new MembershipWithBillingsDTO(
+                    membership,
+                    membershipBilledList,
+                    membershipComments
+            );
             return ResponseEntity.status(HttpStatus.OK).body(membershipWithBillings);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

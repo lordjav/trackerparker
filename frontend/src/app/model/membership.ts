@@ -7,5 +7,6 @@ export interface Membership {
     vehicleType: string,
     plate: string,
     frequency: string,
-    fee: number
+    fee: number,
+    comments: string
 }
