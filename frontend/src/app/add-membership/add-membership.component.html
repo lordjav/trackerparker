@@ -1,0 +1,69 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>
+            Nueva membresía
+        </mat-card-title>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+        <form id="add-membership-form" [formGroup]="addMembershipForm">
+            <mat-form-field id="client">
+                <mat-label>Nombre:</mat-label>
+                <input matInput formControlName="client">
+            </mat-form-field>
+            <br>
+            <div class="form-row">
+                <mat-form-field class="section">
+                    <mat-label>Identificación:</mat-label>
+                    <input matInput formControlName="clientId">
+                </mat-form-field>
+                <mat-form-field class="section">
+                    <mat-label>Placa:</mat-label>
+                    <input matInput formControlName="plate">
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="section">
+                    <mat-label>Teléfono:</mat-label>
+                    <input matInput formControlName="clientPhone">
+                </mat-form-field>
+                <mat-form-field class="section">
+                    <mat-label>Correo:</mat-label>
+                    <input matInput formControlName="clientEmail">
+                </mat-form-field>
+            </div>
+            <div class="form-row">
+                <mat-form-field class="section">
+                    <mat-label>Tipo de vehículo:</mat-label>
+                    <mat-select formControlName="vehicleType">
+                        <mat-option value="bicicleta">Bicicleta</mat-option>
+                        <mat-option value="motocicleta">Moto</mat-option>
+                        <mat-option value="carreta">Carreta</mat-option>
+                        <mat-option value="cuatrimoto">Cuatrimoto</mat-option>
+                        <mat-option value="carro">Carro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="section">
+                    <mat-label>Periodicidad:</mat-label>
+                    <mat-select formControlName="periodicity">
+                        <mat-option value="semanal">Semanal</mat-option>
+                        <mat-option value="quincenal">Quincenal</mat-option>
+                        <mat-option value="mensual">Mensual</mat-option>
+                        <mat-option value="bimestral">Bimestral</mat-option>
+                        <mat-option value="trimestral">Trimestral</mat-option>
+                        <mat-option value="semestral">Semestral</mat-option>
+                        <mat-option value="anual">Anual</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions class="button-container">
+        <button class="button" id="cancel-button" [mat-dialog-close]="true" mat-raised-button>
+            Cancelar
+        </button>
+        <button class="button" id="save-button" mat-raised-button (click)="saveMembership()" [disabled]="!this.addMembershipForm.valid">
+            Guardar
+        </button>
+    </mat-card-actions>
+</mat-card>

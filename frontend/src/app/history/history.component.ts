@@ -31,16 +31,7 @@ export class MyCustomPaginatorIntl extends MatPaginatorIntl {
   ],
   providers: [{provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}],
   templateUrl: './history.component.html',
-  styles: `
-    mat-card {margin: 10px; padding: 10px;}
-    #still-parking {color: red;}
-    .example-loading-shade {
-      display:flex;       
-      justify-content:center; 
-      align-items:center;
-      flex-direction: column;
-    }
-  `
+  styleUrl: './history.component.css'
 })
 export class HistoryComponent {
   displayedColumns: string[] = [

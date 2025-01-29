@@ -12,3 +12,7 @@
 mat-card-actions, mat-card-header, mat-card-content, mat-card-footer {
     padding: 20px;
 }
+
+#comment-container {
+    width: 100%;
+}

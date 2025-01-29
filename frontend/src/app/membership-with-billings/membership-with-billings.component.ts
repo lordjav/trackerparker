@@ -1,4 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Membership } from '../model/membership';
 import { MembershipBill } from '../model/membership-bill';
 import { MembershipService } from '../service/membership.service';
@@ -9,31 +10,34 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { AddBillingComponent } from '../add-billing/add-billing.component';
 
 @Component({
   selector: 'app-membership-with-billings',
   imports: [
-    MatCardModule, 
-    MatIconModule, 
+    MatCardModule,
+    MatIconModule,
     MatButtonModule,
-    CurrencyPipe, 
+    CurrencyPipe,
     DatePipe,
-    MatTableModule
-  ],
-  providers: [DialogComponent],
+    MatTableModule,
+],
+  providers: [DialogComponent, MatDialog],
   templateUrl: './membership-with-billings.component.html',
   styleUrl: './membership-with-billings.component.css'
 })
 export class MembershipWithBillingsComponent {
   @Input({transform: (value: string) => Number(value)}) id!: number;
 
-  membership: Membership | undefined = undefined;
+  membership: Membership | undefined;
 
   membershipBillings: Array<MembershipBill> = [];
 
-  displayedColumns: string[] = ['id', 'billedBy', 'billingDate', 'comments'];
+  displayedColumns: string[] = ['id', 'billedBy', 'billingDate', 'comment'];
 
   dialog = inject(DialogComponent);
+  addBillingDialog = inject(MatDialog);
   
   constructor(private membershipService: MembershipService) {}
 
@@ -54,8 +58,14 @@ export class MembershipWithBillingsComponent {
         return caught;
       }
     )).subscribe(response => {
-      this.membership = response.membership;
+      this.membership = response.membership;      
       this.membershipBillings = response.membershipBillings;
     });
+  }
+
+  addBilling() {
+      const dialogRef = this.addBillingDialog.open(AddBillingComponent, {
+        data: {id: this.id}
+      });
   }
 }

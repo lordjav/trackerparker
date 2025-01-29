@@ -1,7 +1,8 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Membership } from '../model/membership';
 import { MembershipWithBillings } from '../model/membership-with-billings';
+import { MembershipBill } from '../model/membership-bill';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +20,13 @@ export class MembershipService {
   getMembershipWithBillingsById(membershipId: number) {
     return this.http.get<MembershipWithBillings>(this.BASIC_URL + `/${membershipId}`);
   }
+
+  saveNewMembership(data: any) {
+    return this.http.post<Membership>(this.BASIC_URL, data)
+  }
+
+  saveBilling(data: any) {
+    return this.http.post<MembershipBill>(`${this.BASIC_URL}/bill`, data)
+  }
+
 }

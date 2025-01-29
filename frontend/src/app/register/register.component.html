@@ -28,9 +28,11 @@
       Tiempo en parqueadero: {{ timeInParking! | elapsedTime }}
       <br>
     </mat-card-subtitle>
-    <mat-form-field>
+    <br>
+    <mat-form-field id="comment-container" appearance="outline">
       <mat-label>Comentario: </mat-label>
       <textarea 
+        rows="3"
         class="parking-comment" 
         matInput placeholder="Información adicional"
         [formControl]="comment">

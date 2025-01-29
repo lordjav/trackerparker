@@ -3,4 +3,5 @@ export interface MembershipBill {
     membershipId:  number,
     billedBy:  string,
     billingDate:  Date,
+    comment: string
 }

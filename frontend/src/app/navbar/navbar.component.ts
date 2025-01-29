@@ -6,7 +6,12 @@ import { Ilink } from '../model/links';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatTabsModule, RouterOutlet, RouterLink, MatToolbarModule],
+  imports: [
+    MatTabsModule, 
+    RouterOutlet, 
+    RouterLink, 
+    MatToolbarModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: 'navbar.component.css',
 })
