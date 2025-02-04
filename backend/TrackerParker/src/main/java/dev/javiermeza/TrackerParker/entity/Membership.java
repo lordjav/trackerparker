@@ -22,7 +22,7 @@ public class Membership {
 
     private String plate;
 
-    private String frequency;
+    private String periodicity;
 
     private int fee;
 
@@ -83,12 +83,12 @@ public class Membership {
         this.plate = plate;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public String getPeriodicity() {
+        return periodicity;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setPeriodicity(String periodicity) {
+        this.periodicity = periodicity;
     }
 
     public int getFee() {

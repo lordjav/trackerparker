@@ -42,15 +42,10 @@ public class MembershipController {
     }
 
     @PostMapping("/bill")
-    public ResponseEntity<?> billMembership(@RequestBody BillMembershipDTO billMembershipDTO) {
+    public ResponseEntity<?> billMembership(@RequestBody MembershipBilled membershipBilled) {
         try {
-            Long membershipId = billMembershipDTO.getMembershipId();
-            String billedBy = billMembershipDTO.getBilledBy();
-
-            Membership retrievedMembership = membershipService.getMembershipById(membershipId);
-
-            MembershipBilled membershipBilled = membershipService.createMembershipBill(retrievedMembership, billedBy);
-            return ResponseEntity.status(HttpStatus.CREATED).body(membershipBilled);
+            MembershipBilled newMembershipBilled = membershipService.createMembershipBill(membershipBilled);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newMembershipBilled);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al procesar la solicitud: " + e.getMessage());

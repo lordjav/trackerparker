@@ -38,7 +38,7 @@ export class RegisterComponent {
       Validators.maxLength(6), 
       Validators.minLength(6)]
     ),
-    chargedBy: new FormControl('Javier')
+    chargedBy: new FormControl('empleado 1')
   });
   
   comment = new FormControl('');
@@ -117,8 +117,6 @@ export class RegisterComponent {
         }
       });
     }
-  }
-
-  
+  }  
 }
 

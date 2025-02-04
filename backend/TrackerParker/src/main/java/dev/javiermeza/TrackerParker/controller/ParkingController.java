@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/parking")
-@CrossOrigin(origins = "http://localhost:4200/")
+@RequestMapping("parking")
+@CrossOrigin(origins = "*")
 public class ParkingController {
 
     @Autowired

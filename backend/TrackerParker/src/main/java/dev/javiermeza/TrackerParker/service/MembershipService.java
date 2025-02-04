@@ -16,7 +16,7 @@ public interface MembershipService {
 
     List<Membership> getMembershipByClientId(String clientId);
 
-    MembershipBilled createMembershipBill(Membership membership, String billedBy);
+    MembershipBilled createMembershipBill(MembershipBilled membershipBilled);
 
     List<MembershipBilled> getAllBillingsByMembershipId(Long membershipId);
 

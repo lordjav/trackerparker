@@ -1,6 +1,7 @@
 package dev.javiermeza.TrackerParker.service;
 
 import dev.javiermeza.TrackerParker.entity.*;
+import dev.javiermeza.TrackerParker.enums.membershipValue;
 import dev.javiermeza.TrackerParker.repository.MembershipBilledRepository;
 import dev.javiermeza.TrackerParker.repository.MembershipCommentRepository;
 import dev.javiermeza.TrackerParker.repository.MembershipRepository;
@@ -28,6 +29,8 @@ public class MembershipServiceImpl implements MembershipService {
         if (membership.getPlate() == null || membership.getPlate().trim().isEmpty()) {
             throw new IllegalArgumentException("La placa no puede estar vacía");
         }
+        int membershipFee = membershipValue.getMembershipValueByTypeAndPeriod(membership.getVehicleType(), membership.getPeriodicity());
+        membership.setFee(membershipFee);
         return membershipRepository.save(membership);
     }
 
@@ -48,13 +51,10 @@ public class MembershipServiceImpl implements MembershipService {
         return membershipRepository.findByClientId(clientId);
     }
 
-    public MembershipBilled createMembershipBill(Membership membership, String billedBy) {
-        MembershipBilled newMembershipBill = new MembershipBilled();
-        newMembershipBill.setMembershipId(membership.getId());
-        newMembershipBill.setBilledBy(billedBy);
-        newMembershipBill.setBillingDate(new Date());
+    public MembershipBilled createMembershipBill(MembershipBilled membershipBilled) {
 
-        return membershipBilledRepository.save(newMembershipBill);
+        membershipBilled.setBillingDate(new Date());
+        return membershipBilledRepository.save(membershipBilled);
     }
 
     public List<MembershipBilled> getAllBillingsByMembershipId(Long membershipId) {
