@@ -11,22 +11,21 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  BASIC_URL = 'http://localhost:8080/membership';
+  BASIC_URL = 'https://trackerparker.wcqrw9rjxbn6r.us-east-1.cs.amazonlightsail.com';
 
   getAllMemberships() {
-    return this.http.get<Array<Membership>>(this.BASIC_URL);
+    return this.http.get<Array<Membership>>(`${this.BASIC_URL}/membership`);
   }
 
   getMembershipWithBillingsById(membershipId: number) {
-    return this.http.get<MembershipWithBillings>(this.BASIC_URL + `/${membershipId}`);
+    return this.http.get<MembershipWithBillings>(`${this.BASIC_URL}/membership/${membershipId}`);
   }
 
   saveNewMembership(data: any) {
-    return this.http.post<Membership>(this.BASIC_URL, data)
+    return this.http.post<Membership>(`${this.BASIC_URL}/membership`, data)
   }
 
   saveBilling(data: any) {
-    return this.http.post<MembershipBill>(`${this.BASIC_URL}/bill`, data)
+    return this.http.post<MembershipBill>(`${this.BASIC_URL}/membership/bill`, data)
   }
-
 }
