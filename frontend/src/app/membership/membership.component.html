@@ -1,4 +1,11 @@
 <mat-card id="membershipList-container">
+    @if (isLoadingList) {
+        <div id="loading">
+        <mat-spinner></mat-spinner>
+        <br>
+        <p>Cargando información...</p>
+        </div>
+    }
     @for (membership of membershipList; track membership.id) {
         <div>
             <mat-card 
@@ -12,7 +19,7 @@
                 <mat-card-footer>
                     <mat-card-title>{{ membership.client }}</mat-card-title>
                     <div>
-                        {{ membership.vehicleType }}
+                        {{ membership.vehicleType | titlecase }}
                         <br>
                         {{ membership.plate }}
                     </div>

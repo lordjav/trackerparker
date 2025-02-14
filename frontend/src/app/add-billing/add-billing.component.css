@@ -1,19 +1,13 @@
+#add-billing-title {
+    color: #FAD201;
+}
+
 #header {
     margin: 0 10px;
 }
 
-#save-button {
-    background-color: navy;
-    color: white;
-}
-
-#cancel-button {
-    background-color: red;
-    color: white;
-}
-
 #billedBy, #comment {
-    width: 100%;
+    width: -webkit-fill-available;
     padding: 0 10px;
 }
 

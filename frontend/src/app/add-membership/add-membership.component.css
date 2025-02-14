@@ -1,11 +1,5 @@
-#save-button {
-    background-color: navy;
-    color: white;
-}
-
-#cancel-button {
-    background-color: red;
-    color: white;
+#add-membership-title {
+    color: #FAD201;
 }
 
 .form-row {
@@ -15,7 +9,7 @@
 }
 
 #client {
-    width: 100%;
+    width: -webkit-fill-available;
     padding: 0 10px;
 }
 

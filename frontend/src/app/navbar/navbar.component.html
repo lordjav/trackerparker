@@ -1,12 +1,11 @@
-<mat-toolbar>
-    <nav id="main-navbar" mat-tab-nav-bar [tabPanel]="tabPanel">
-        @for (link of links; track link.section) {
-          <a mat-tab-link
-            (click)="activeLink = link.url"
-            [active]="activeLink == link.url"
-            routerLink="{{link.url}}"> {{link.section}} </a>
-        }
-      </nav>
-      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-</mat-toolbar>
+  <nav id="main-navbar" mat-tab-nav-bar [tabPanel]="tabPanel">
+    <img src="isologo-s.jpg" width="100px;">
+    @for (link of links; track link.section) {
+        <a mat-tab-link
+          (click)="activeLink = link.url"
+          [active]="activeLink == link.url"
+          routerLink="{{link.url}}"> {{link.section}} </a>
+      }
+    </nav>
+    <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 <router-outlet />

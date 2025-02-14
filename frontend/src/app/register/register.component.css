@@ -16,3 +16,11 @@ mat-card-actions, mat-card-header, mat-card-content, mat-card-footer {
 #comment-container {
     width: 100%;
 }
+
+#enter-plate {
+    color: #FAD201;
+}
+
+#hint {
+    color: white;
+}

@@ -6,11 +6,24 @@
 html {
   @include mat.theme((
     color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
+      theme-type: dark,
+      primary: mat.$yellow-palette,
+      tertiary: mat.$orange-palette,
     ),
     typography: Roboto,
     density: 0,
   ));
 }
+
+:root {
+  @include mat.card-overrides((
+    elevated-container-color: #1e1e1e,
+  ));
+  @include mat.theme-overrides((
+    primary: #FAD201,
+  ));
+  @include mat.table-overrides((
+    header-headline-color: #FAD201,
+  ));
+}
+

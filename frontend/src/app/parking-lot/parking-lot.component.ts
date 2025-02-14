@@ -5,12 +5,14 @@ import { ParkingService } from '../service/parking.service';
 import { catchError } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { DialogComponent } from '../dialog/dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-parking-lot',
   imports: [
     ActiveParkingComponent,
     MatCardModule,
+    MatProgressSpinnerModule
   ],
   providers: [DialogComponent],
   templateUrl: './parking-lot.component.html',
@@ -19,6 +21,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class ParkingLotComponent {
   
   activeParkingList: Parking[] = [];
+  isLoadingList: boolean = true;
 
   dialog = inject(DialogComponent);
 
@@ -41,6 +44,7 @@ export class ParkingLotComponent {
         return caught;
       })).subscribe(response => {
         this.activeParkingList = response;
+        this.isLoadingList = false;
       }
     )
   }

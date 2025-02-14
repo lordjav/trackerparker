@@ -11,7 +11,7 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  BASIC_URL = 'https://trackerparker.wcqrw9rjxbn6r.us-east-1.cs.amazonlightsail.com';
+  BASIC_URL = 'http://localhost:8080';
 
   getAllMemberships() {
     return this.http.get<Array<Membership>>(`${this.BASIC_URL}/membership`);

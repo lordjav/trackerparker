@@ -1,13 +1,13 @@
 <mat-card id="input-card">
   <mat-card-header>
-    <mat-card-title>Ingrese la placa:</mat-card-title>
+    <mat-card-title id="enter-plate">Ingrese la placa:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-form-field [formGroup]="parkingSearchForm" id="register-input" appearance="outline">
       <mat-label>Placa</mat-label>
       <input class="fs1" matInput placeholder="Placa" formControlName="plate">
       <mat-icon matSuffix>motorcycle</mat-icon>
-      <mat-hint>Ingrese número de placa</mat-hint>
+      <mat-hint id="hint">Ingrese número de placa</mat-hint>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
@@ -16,7 +16,7 @@
   </mat-card-actions>
   @if (existingParking) {
   <mat-card-footer>
-    <mat-card-title>Vehículo encontrado: {{ existingParking.plate }} </mat-card-title>
+    <mat-card-title class="text-color">Vehículo encontrado: {{ existingParking.plate }} </mat-card-title>
     <mat-card-subtitle>
       <br>
       Número de registro: {{ existingParking.id }}

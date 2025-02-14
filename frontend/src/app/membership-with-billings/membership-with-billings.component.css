@@ -17,3 +17,11 @@ mat-card, mat-card-footer {
     bottom: 30px;
     right: 30px;
 }
+
+*, .add-button {
+    color: white;
+}
+
+#cliente-name {
+    color: #FAD201;
+}
