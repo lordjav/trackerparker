@@ -9,7 +9,7 @@ import { HalResponse } from '../model/hal-response';
 })
 export class ParkingService {
 
-  BASIC_URL = 'http://localhost:8080';
+  BASIC_URL = 'https://trackerparker.wcqrw9rjxbn6r.us-east-1.cs.amazonlightsail.com';
 
   constructor(private http: HttpClient) { }
 
