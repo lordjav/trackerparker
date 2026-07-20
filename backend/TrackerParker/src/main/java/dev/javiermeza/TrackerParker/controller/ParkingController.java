@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("parking")
+@CrossOrigin(origins = "*")
 public class ParkingController {
 
     @Autowired

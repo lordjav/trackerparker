@@ -1,7 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Parking } from '../model/parking.type';
-import { API_BASE_URL } from '../config/api.config';
 import { Observable } from 'rxjs';
 import { HalResponse } from '../model/hal-response';
 
@@ -10,7 +9,7 @@ import { HalResponse } from '../model/hal-response';
 })
 export class ParkingService {
 
-  BASIC_URL = API_BASE_URL;
+  BASIC_URL = 'https://trackerparker.wcqrw9rjxbn6r.us-east-1.cs.amazonlightsail.com';
 
   constructor(private http: HttpClient) { }
 

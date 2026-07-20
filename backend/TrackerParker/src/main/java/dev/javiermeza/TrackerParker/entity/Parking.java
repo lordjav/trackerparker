@@ -78,7 +78,7 @@ public class Parking {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment() {
         this.comment = comment;
     }
 
