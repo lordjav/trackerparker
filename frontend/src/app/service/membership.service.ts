@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Membership } from '../model/membership';
 import { MembershipWithBillings } from '../model/membership-with-billings';
 import { MembershipBill } from '../model/membership-bill';
+import { API_BASE_URL } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  BASIC_URL = 'https://trackerparker.wcqrw9rjxbn6r.us-east-1.cs.amazonlightsail.com';
+  BASIC_URL = API_BASE_URL;
 
   getAllMemberships() {
     return this.http.get<Array<Membership>>(`${this.BASIC_URL}/membership`);

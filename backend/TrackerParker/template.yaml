@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: TrackerParker API - Spring Boot, Lambda SnapStart, Function URL and CloudFront
+
+Parameters:
+  Project:
+    Type: String
+    Default: TrackerParker
+  Environment:
+    Type: String
+    Default: live
+  ApiDomainName:
+    Type: String
+    Description: API custom domain, for example api.example.com.
+  CertificateArn:
+    Type: String
+    Description: Issued ACM certificate ARN from us-east-1 for ApiDomainName.
+  AllowedOrigins:
+    Type: String
+    Description: Comma-separated Angular origins, for example https://app.example.com.
+  DatabaseUrl:
+    Type: String
+    NoEcho: true
+    Description: Neon's pooled PostgreSQL connection URL.
+  OriginSecret:
+    Type: String
+    NoEcho: true
+    MinLength: 32
+    Description: Random shared secret injected by CloudFront as x-origin-secret.
+  LogLevel:
+    Type: String
+    Default: INFO
+    AllowedValues: [TRACE, DEBUG, INFO, WARN, ERROR]
+
+Resources:
+  TrackerParkerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${Project}-${Environment}-api'
+      CodeUri: target/lambda/
+      Handler: run.sh
+      Runtime: java21
+      Architectures: [x86_64]
+      MemorySize: 1024
+      Timeout: 30
+      AutoPublishAlias: live
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+          PORT: '8080'
+          AWS_LWA_PORT: '8080'
+          AWS_LWA_READINESS_CHECK_PATH: /health
+          AWS_LWA_INVOKE_MODE: buffered
+          DATABASE_URL: !Ref DatabaseUrl
+          ALLOWED_ORIGINS: !Ref AllowedOrigins
+          ORIGIN_SECRET: !Ref OriginSecret
+          ORIGIN_SECRET_REQUIRED: 'true'
+          LOG_LEVEL: !Ref LogLevel
+      Layers:
+        - !Sub 'arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerX86:28'
+      Tags:
+        Project: !Ref Project
+        Environment: !Ref Environment
+
+  FunctionUrl:
+    Type: AWS::Lambda::Url
+    DependsOn: TrackerParkerFunctionAliaslive
+    Properties:
+      TargetFunctionArn: !Ref TrackerParkerFunction
+      Qualifier: live
+      AuthType: NONE
+      InvokeMode: BUFFERED
+
+  FunctionUrlInvokePermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: FunctionUrl
+    Properties:
+      FunctionName: !Sub '${TrackerParkerFunction.Arn}:live'
+      Action: lambda:InvokeFunctionUrl
+      Principal: '*'
+      FunctionUrlAuthType: NONE
+
+  FunctionUrlUnderlyingInvokePermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: FunctionUrl
+    Properties:
+      FunctionName: !Sub '${TrackerParkerFunction.Arn}:live'
+      Action: lambda:InvokeFunction
+      Principal: '*'
+      InvokedViaFunctionUrl: true
+
+  FunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${TrackerParkerFunction}'
+      RetentionInDays: 14
+      Tags:
+        - Key: Project
+          Value: !Ref Project
+        - Key: Environment
+          Value: !Ref Environment
+
+  ApiWebAcl:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      Name: !Sub '${Project}-${Environment}-api'
+      Scope: CLOUDFRONT
+      DefaultAction:
+        Allow: {}
+      Rules: []
+      VisibilityConfig:
+        CloudWatchMetricsEnabled: false
+        MetricName: !Sub '${Project}-${Environment}-api'
+        SampledRequestsEnabled: false
+      Tags:
+        - Key: Project
+          Value: !Ref Project
+        - Key: Environment
+          Value: !Ref Environment
+
+  ApiDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Aliases: [!Ref ApiDomainName]
+        Comment: !Sub '${Project} ${Environment} API'
+        PriceClass: PriceClass_100
+        WebACLId: !GetAtt ApiWebAcl.Arn
+        Origins:
+          - Id: LambdaFunctionUrl
+            DomainName: !Select [2, !Split ['/', !GetAtt FunctionUrl.FunctionUrl]]
+            CustomOriginConfig:
+              HTTPSPort: 443
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols: [TLSv1.2]
+            OriginCustomHeaders:
+              - HeaderName: x-origin-secret
+                HeaderValue: !Ref OriginSecret
+        DefaultCacheBehavior:
+          TargetOriginId: LambdaFunctionUrl
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+          CachedMethods: [GET, HEAD, OPTIONS]
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
+      Tags:
+        - Key: Project
+          Value: !Ref Project
+        - Key: Environment
+          Value: !Ref Environment
+
+Outputs:
+  CloudFrontUrl:
+    Description: Public API URL through CloudFront.
+    Value: !Sub 'https://${ApiDomainName}'
+  FunctionUrl:
+    Description: Direct Function URL (only /health is available without the CloudFront origin header).
+    Value: !GetAtt FunctionUrl.FunctionUrl
+  LiveAliasArn:
+    Description: SnapStart-enabled Lambda alias ARN.
+    Value: !Sub '${TrackerParkerFunction.Arn}:live'
+  CloudFrontDomainName:
+    Description: Target for the Namecheap api CNAME record.
+    Value: !GetAtt ApiDistribution.DomainName
+  CertificateArn:
+    Description: ACM certificate used by CloudFront. Obtain its DNS validation CNAME with the documented command before deployment.
+    Value: !Ref CertificateArn
