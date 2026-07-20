@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://trackerparker.javiermeza.dev';
+export const API_BASE_URL = 'https://api.trackerparker.javiermeza.dev';

@@ -44,6 +44,9 @@ Resources:
       MemorySize: 1024
       Timeout: 30
       AutoPublishAlias: live
+      # Environment changes must also publish a new SnapStart version; the
+      # Function URL targets this alias rather than $LATEST.
+      AutoPublishAliasAllProperties: true
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
